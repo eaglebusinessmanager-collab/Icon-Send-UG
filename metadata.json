@@ -1,0 +1,6 @@
+{
+  "name": "ICON SEND UG - Bulk SMS Platform",
+  "description": "Production-grade Bulk SMS platform for Uganda by The Eagle Icon Developers UG, with modular SMS provider adapters, internal credit wallets, real-time analytics, and mobile money top-ups.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

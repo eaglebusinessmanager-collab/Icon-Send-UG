@@ -1,0 +1,584 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_001",
+      "email": "eaglebusinessmanager@gmail.com",
+      "password_hash": "48bdd22ed0b1a28a0dacfdeabdc72c7f4f38ac08545d244fc03d4fb1e89375c029cfc9fdf500eaa7e7767ff28560464f46f4bbeb44a9a144f27531855547c276",
+      "full_name": "The Eagle Icon Admin",
+      "phone_number": "+256772000001",
+      "role": "super_admin",
+      "status": "active",
+      "email_verified": true,
+      "phone_verified": true,
+      "company_name": "The Eagle Icon Developers UG",
+      "created_at": "2026-10-05T10:07:47.088Z",
+      "updated_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "usr_demo_002",
+      "email": "demo@iconsend.ug",
+      "password_hash": "f8334a559c825fd1acd330f3253b93cd585470a14862a9c0ed9d1931655bf95586c54d46a2b1a876ac9f519d2aec03683d8ce39a98279137b3db81c4c08a0565",
+      "full_name": "Mukasa Brian",
+      "phone_number": "+256772123456",
+      "role": "customer",
+      "status": "active",
+      "email_verified": true,
+      "phone_verified": true,
+      "company_name": "Kampala Retail Traders Ltd",
+      "created_at": "2026-10-20T10:07:47.088Z",
+      "updated_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "usr_1793786872256_3ia2s",
+      "email": "mirembe@kampalastore.ug",
+      "password_hash": "a1fd3b2100f66156701e727f699f02b518aaa4ae86c114aec7986096156c4b6d27327ae6971198c8191faad093eda6721f587a0f38820719cc65ef5f99782536",
+      "full_name": "Mirembe Grace",
+      "phone_number": "0772554433",
+      "role": "customer",
+      "status": "active",
+      "email_verified": true,
+      "phone_verified": false,
+      "company_name": "Kampala Store",
+      "created_at": "2026-11-04T10:07:52.265Z",
+      "updated_at": "2026-11-04T10:07:52.265Z"
+    }
+  ],
+  "wallets": [
+    {
+      "id": "wal_admin_001",
+      "user_id": "usr_admin_001",
+      "available_credits": 10000,
+      "purchased_credits": 10000,
+      "promotional_credits": 0,
+      "used_credits": 240,
+      "reserved_credits": 0,
+      "currency": "UGX",
+      "updated_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "wal_demo_002",
+      "user_id": "usr_demo_002",
+      "available_credits": 350,
+      "purchased_credits": 400,
+      "promotional_credits": 10,
+      "used_credits": 60,
+      "reserved_credits": 0,
+      "currency": "UGX",
+      "updated_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "wal_1793786872265_d7v65",
+      "user_id": "usr_1793786872256_3ia2s",
+      "available_credits": 259,
+      "purchased_credits": 260,
+      "promotional_credits": 0,
+      "used_credits": 1,
+      "reserved_credits": 0,
+      "currency": "UGX",
+      "updated_at": "2026-11-04T10:08:59.980Z"
+    }
+  ],
+  "wallet_transactions": [
+    {
+      "id": "wtx_1793786939980_4mjda",
+      "wallet_id": "wal_1793786872265_d7v65",
+      "user_id": "usr_1793786872256_3ia2s",
+      "amount_credits": -1,
+      "type": "sms_usage",
+      "description": "Single SMS to +256772123456 (1 part)",
+      "balance_after": 259,
+      "reference_id": "msg_1793786939980_kiizw",
+      "created_at": "2026-11-04T10:08:59.980Z"
+    },
+    {
+      "id": "wtx_1793786932920_uqauk",
+      "wallet_id": "wal_1793786872265_d7v65",
+      "user_id": "usr_1793786872256_3ia2s",
+      "amount_credits": 260,
+      "type": "purchase",
+      "description": "Pesapal Live Payment (Pesapal Uganda (MTN/Airtel/Card)) - Ref: TXN-PESAPAL-876313230",
+      "balance_after": 260,
+      "reference_id": "ptx_1793786876314_4jdw",
+      "created_at": "2026-11-04T10:08:52.920Z"
+    },
+    {
+      "id": "wtx_001",
+      "wallet_id": "wal_demo_002",
+      "user_id": "usr_demo_002",
+      "amount_credits": 10,
+      "type": "signup_bonus",
+      "description": "Free onboarding trial credits for new verified customer",
+      "balance_after": 10,
+      "created_at": "2026-10-20T10:07:47.089Z"
+    },
+    {
+      "id": "wtx_002",
+      "wallet_id": "wal_demo_002",
+      "user_id": "usr_demo_002",
+      "amount_credits": 400,
+      "type": "purchase",
+      "description": "Purchased Business Growth package via MTN Mobile Money",
+      "balance_after": 410,
+      "reference_id": "TXN-MOMO-781920",
+      "created_at": "2026-10-25T10:07:47.089Z"
+    },
+    {
+      "id": "wtx_003",
+      "wallet_id": "wal_demo_002",
+      "user_id": "usr_demo_002",
+      "amount_credits": -50,
+      "type": "sms_usage",
+      "description": "Dispatched campaign: End of Month Flash Sale",
+      "balance_after": 360,
+      "reference_id": "cmp_001",
+      "created_at": "2026-11-01T10:07:47.089Z"
+    },
+    {
+      "id": "wtx_004",
+      "wallet_id": "wal_demo_002",
+      "user_id": "usr_demo_002",
+      "amount_credits": -1,
+      "type": "sms_usage",
+      "description": "Single SMS dispatched to +256782334455",
+      "balance_after": 359,
+      "reference_id": "msg_003",
+      "created_at": "2026-11-03T10:07:47.089Z"
+    }
+  ],
+  "sms_messages": [
+    {
+      "id": "msg_1793786939980_kiizw",
+      "user_id": "usr_1793786872256_3ia2s",
+      "recipient": "0772123456",
+      "normalized_recipient": "+256772123456",
+      "carrier": "MTN Uganda",
+      "message": "Hello from ICON SEND UG by The Eagle Icon Developers. Your order is confirmed.",
+      "sender_id": "ICONSEND",
+      "segments": 1,
+      "character_count": 78,
+      "encoding": "GSM-7",
+      "credits_deducted": 1,
+      "status": "sent",
+      "provider_slug": "bulksmsuganda",
+      "provider_message_id": "bsmsug_sim_1793786939980_vpkvt2h",
+      "created_at": "2026-11-04T10:08:59.980Z"
+    },
+    {
+      "id": "msg_001",
+      "user_id": "usr_demo_002",
+      "campaign_id": "cmp_001",
+      "recipient": "0772456789",
+      "normalized_recipient": "+256772456789",
+      "carrier": "MTN Uganda",
+      "message": "Dear Customer, enjoy 15% discount on all wholesale items this weekend at Kampala Traders. Reply STOP to opt out.",
+      "sender_id": "KAMPTRADERS",
+      "segments": 1,
+      "character_count": 114,
+      "encoding": "GSM-7",
+      "credits_deducted": 1,
+      "status": "delivered",
+      "provider_slug": "bulksmsuganda",
+      "provider_message_id": "bsmsug_seed_901",
+      "created_at": "2026-11-01T10:07:47.089Z",
+      "delivered_at": "2026-11-01T10:07:55.089Z"
+    },
+    {
+      "id": "msg_002",
+      "user_id": "usr_demo_002",
+      "campaign_id": "cmp_001",
+      "recipient": "0701987654",
+      "normalized_recipient": "+256701987654",
+      "carrier": "Airtel Uganda",
+      "message": "Dear Customer, enjoy 15% discount on all wholesale items this weekend at Kampala Traders. Reply STOP to opt out.",
+      "sender_id": "KAMPTRADERS",
+      "segments": 1,
+      "character_count": 114,
+      "encoding": "GSM-7",
+      "credits_deducted": 1,
+      "status": "delivered",
+      "provider_slug": "bulksmsuganda",
+      "provider_message_id": "bsmsug_seed_902",
+      "created_at": "2026-11-01T10:07:47.089Z",
+      "delivered_at": "2026-11-01T10:07:59.089Z"
+    },
+    {
+      "id": "msg_003",
+      "user_id": "usr_demo_002",
+      "recipient": "0782334455",
+      "normalized_recipient": "+256782334455",
+      "carrier": "MTN Uganda",
+      "message": "Your payment of UGX 150,000 has been received. Order #8921 is being prepared for dispatch.",
+      "sender_id": "KAMPTRADERS",
+      "segments": 1,
+      "character_count": 94,
+      "encoding": "GSM-7",
+      "credits_deducted": 1,
+      "status": "delivered",
+      "provider_slug": "bulksmsuganda",
+      "provider_message_id": "bsmsug_seed_903",
+      "created_at": "2026-11-03T10:07:47.089Z",
+      "delivered_at": "2026-11-03T10:07:51.089Z"
+    }
+  ],
+  "sms_campaigns": [
+    {
+      "id": "cmp_001",
+      "user_id": "usr_demo_002",
+      "name": "End of Month Flash Sale",
+      "message": "Dear Customer, enjoy 15% discount on all wholesale items this weekend at Kampala Traders. Reply STOP to opt out.",
+      "sender_id": "KAMPTRADERS",
+      "total_recipients": 50,
+      "valid_recipients": 50,
+      "invalid_recipients": 0,
+      "duplicate_recipients": 0,
+      "total_segments": 50,
+      "total_credits": 50,
+      "status": "completed",
+      "created_at": "2026-11-01T10:07:47.089Z",
+      "completed_at": "2026-11-01T10:08:32.089Z"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "cnt_001",
+      "user_id": "usr_demo_002",
+      "name": "Sarah Akello",
+      "phone_number": "0772456789",
+      "normalized_phone": "+256772456789",
+      "group_id": "grp_001",
+      "consent_status": "opted_in",
+      "tags": [
+        "VIP",
+        "Retail"
+      ],
+      "created_at": "2026-10-25T10:07:47.088Z"
+    },
+    {
+      "id": "cnt_002",
+      "user_id": "usr_demo_002",
+      "name": "David Ochieng",
+      "phone_number": "0701987654",
+      "normalized_phone": "+256701987654",
+      "group_id": "grp_001",
+      "consent_status": "opted_in",
+      "tags": [
+        "VIP"
+      ],
+      "created_at": "2026-10-26T10:07:47.088Z"
+    },
+    {
+      "id": "cnt_003",
+      "user_id": "usr_demo_002",
+      "name": "Grace Nalubega",
+      "phone_number": "0782334455",
+      "normalized_phone": "+256782334455",
+      "group_id": "grp_001",
+      "consent_status": "opted_in",
+      "tags": [
+        "Wholesale"
+      ],
+      "created_at": "2026-10-27T10:07:47.088Z"
+    },
+    {
+      "id": "cnt_004",
+      "user_id": "usr_demo_002",
+      "name": "Patrick Byaruhanga",
+      "phone_number": "0754112233",
+      "normalized_phone": "+256754112233",
+      "group_id": "grp_002",
+      "consent_status": "opted_in",
+      "tags": [
+        "Distributor"
+      ],
+      "created_at": "2026-10-30T10:07:47.088Z"
+    },
+    {
+      "id": "cnt_005",
+      "user_id": "usr_demo_002",
+      "name": "Florence Namutebi",
+      "phone_number": "0776998877",
+      "normalized_phone": "+256776998877",
+      "group_id": "grp_002",
+      "consent_status": "opted_in",
+      "tags": [
+        "Distributor"
+      ],
+      "created_at": "2026-10-31T10:07:47.088Z"
+    }
+  ],
+  "contact_groups": [
+    {
+      "id": "grp_001",
+      "user_id": "usr_demo_002",
+      "name": "VIP Customers - Kampala",
+      "description": "Frequent buyers and high-value wholesale clients",
+      "contact_count": 3,
+      "created_at": "2026-10-25T10:07:47.088Z"
+    },
+    {
+      "id": "grp_002",
+      "user_id": "usr_demo_002",
+      "name": "Wholesale Outlets",
+      "description": "Distributors across Jinja, Mbarara and Gulu",
+      "contact_count": 2,
+      "created_at": "2026-10-30T10:07:47.088Z"
+    }
+  ],
+  "sender_ids": [
+    {
+      "id": "sid_001",
+      "user_id": "usr_admin_001",
+      "sender_id": "ICONSEND",
+      "status": "approved",
+      "purpose": "Default platform sender ID for official system alerts and customer campaigns",
+      "sample_message": "Your ICON SEND UG verification code is 4829. Valid for 10 minutes.",
+      "created_at": "2026-10-05T10:07:47.088Z"
+    },
+    {
+      "id": "sid_002",
+      "user_id": "usr_admin_001",
+      "sender_id": "EAGLEICON",
+      "status": "approved",
+      "purpose": "The Eagle Icon Developers corporate brand notifications",
+      "sample_message": "Update from The Eagle Icon Developers regarding your enterprise service tier.",
+      "created_at": "2026-10-10T10:07:47.088Z"
+    },
+    {
+      "id": "sid_003",
+      "user_id": "usr_demo_002",
+      "sender_id": "KAMPTRADERS",
+      "status": "approved",
+      "purpose": "Store receipts and flash sale alerts for Kampala Traders clients",
+      "sample_message": "Kampala Traders: New stock of kitchenware has arrived at Luwum St branch.",
+      "created_at": "2026-10-25T10:07:47.088Z"
+    }
+  ],
+  "sms_packages": [
+    {
+      "id": "pkg_starter",
+      "name": "Starter Tier",
+      "price_ugx": 5000,
+      "credits": 125,
+      "bonus_credits": 0,
+      "rate_per_sms": 40,
+      "is_popular": false,
+      "is_active": true,
+      "description": "Ideal for small retail businesses, schools and event notifications.",
+      "created_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "pkg_business",
+      "name": "Business Growth",
+      "price_ugx": 10000,
+      "credits": 260,
+      "bonus_credits": 0,
+      "rate_per_sms": 38.5,
+      "is_popular": true,
+      "is_active": true,
+      "description": "Best choice for growing SMEs, customer alerts, and promotional announcements.",
+      "created_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "pkg_professional",
+      "name": "Professional Volume",
+      "price_ugx": 25000,
+      "credits": 700,
+      "bonus_credits": 0,
+      "rate_per_sms": 35.7,
+      "is_popular": false,
+      "is_active": true,
+      "description": "For corporate marketing teams and frequent bulk communication across Uganda.",
+      "created_at": "2026-11-04T10:07:47.088Z"
+    },
+    {
+      "id": "pkg_enterprise",
+      "name": "Enterprise Bulk",
+      "price_ugx": 50000,
+      "credits": 1500,
+      "bonus_credits": 0,
+      "rate_per_sms": 33.3,
+      "is_popular": false,
+      "is_active": true,
+      "description": "Maximum cost savings for high-volume delivery, churches, SACCOs and universities.",
+      "created_at": "2026-11-04T10:07:47.088Z"
+    }
+  ],
+  "payment_transactions": [
+    {
+      "id": "ptx_1793786876314_4jdw",
+      "user_id": "usr_1793786872256_3ia2s",
+      "package_id": "pkg_business",
+      "amount_ugx": 10000,
+      "credits_added": 260,
+      "payment_method": "pesapal",
+      "status": "completed",
+      "transaction_reference": "TXN-PESAPAL-876313230",
+      "phone_number": "0772554433",
+      "notes": "Pesapal Order: pesapal_live_1793786876314_czl42 | Pesapal Confirmed: UGX_932920 via Pesapal Uganda (MTN/Airtel/Card)",
+      "created_at": "2026-11-04T10:07:56.314Z"
+    },
+    {
+      "id": "ptx_001",
+      "user_id": "usr_demo_002",
+      "package_id": "pkg_business",
+      "amount_ugx": 10000,
+      "credits_added": 400,
+      "payment_method": "mtn_momo",
+      "status": "completed",
+      "transaction_reference": "TXN-MOMO-781920",
+      "phone_number": "0772123456",
+      "notes": "Automated Instant Push Confirmation",
+      "created_at": "2026-10-25T10:07:47.089Z"
+    }
+  ],
+  "provider_settings": [
+    {
+      "id": "prov_bulksmsuganda",
+      "name": "Bulk SMS Uganda",
+      "slug": "bulksmsuganda",
+      "is_active": true,
+      "api_key": "",
+      "api_url": "https://app.bulksmsug.com",
+      "sender_id": "ICONSEND",
+      "balance_cached": 2499,
+      "test_mode": false
+    },
+    {
+      "id": "prov_africastalking",
+      "name": "Africa's Talking",
+      "slug": "africastalking",
+      "is_active": false,
+      "api_key": "",
+      "api_url": "https://api.africastalking.com/version1/messaging",
+      "api_secret": "",
+      "sender_id": "ICONSEND",
+      "balance_cached": 1800,
+      "test_mode": true
+    },
+    {
+      "id": "prov_generic",
+      "name": "Custom HTTP Gateway / SMPP",
+      "slug": "generic_http",
+      "is_active": false,
+      "api_key": "",
+      "api_url": "",
+      "sender_id": "ICONSEND",
+      "balance_cached": 5000,
+      "test_mode": true
+    }
+  ],
+  "system_settings": {
+    "platform_name": "ICON SEND UG",
+    "support_email": "support@iconsend.ug",
+    "whatsapp_contact": "+256772000001",
+    "phone_contact": "+256772000001",
+    "address_kampala": "Plot 14 Kampala Road, Central Division, Kampala, Uganda",
+    "default_currency": "UGX",
+    "signup_bonus_credits": 0,
+    "free_credits_enabled": false,
+    "maintenance_mode": false,
+    "require_email_verification": false,
+    "max_bulk_batch_size": 1000,
+    "active_provider_slug": "bulksmsuganda",
+    "pesapal_consumer_key": "",
+    "pesapal_consumer_secret": "",
+    "pesapal_ipn_id": "",
+    "pesapal_base_url": "https://pay.pesapal.com/v3"
+  },
+  "notifications": [
+    {
+      "id": "notif_1793786932948_li2h",
+      "user_id": "usr_1793786872256_3ia2s",
+      "title": "Pesapal Payment Verified & Credits Allocated",
+      "message": "UGX 10,000 payment confirmed via Pesapal. 260 SMS credits added to your wallet.",
+      "type": "success",
+      "is_read": false,
+      "created_at": "2026-11-04T10:08:52.948Z"
+    },
+    {
+      "id": "notif_1793786872265_i511",
+      "user_id": "usr_1793786872256_3ia2s",
+      "title": "Welcome to ICON SEND UG",
+      "message": "Your account is ready. Purchase SMS credits via Pesapal to start dispatching single or bulk SMS.",
+      "type": "success",
+      "is_read": false,
+      "created_at": "2026-11-04T10:07:52.265Z"
+    },
+    {
+      "id": "notif_001",
+      "user_id": "usr_demo_002",
+      "title": "Welcome to ICON SEND UG",
+      "message": "Your account is ready. Top up your SMS wallet via Pesapal to start dispatching business SMS campaigns immediately.",
+      "type": "success",
+      "is_read": false,
+      "created_at": "2026-10-20T10:07:47.089Z"
+    },
+    {
+      "id": "notif_002",
+      "user_id": "usr_demo_002",
+      "title": "Credit Top-up Successful",
+      "message": "UGX 10,000 payment verified. 400 SMS credits have been added to your balance.",
+      "type": "info",
+      "is_read": true,
+      "created_at": "2026-10-25T10:07:47.089Z"
+    },
+    {
+      "id": "notif_003",
+      "user_id": "usr_demo_002",
+      "title": "Campaign Completed",
+      "message": "End of Month Flash Sale finished sending. 50/50 messages delivered successfully.",
+      "type": "success",
+      "is_read": true,
+      "created_at": "2026-11-01T10:07:47.089Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "aud_1793788035509_cbc3",
+      "admin_id": "usr_admin_001",
+      "admin_email": "eaglebusinessmanager@gmail.com",
+      "action": "PROVIDER_BALANCE_CALIBRATED",
+      "target_type": "SMS_GATEWAY",
+      "target_id": "bulksmsuganda",
+      "details": {
+        "slug": "bulksmsuganda",
+        "newBalance": 2499,
+        "reason": "Automated API verification test"
+      },
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-11-04T10:27:15.509Z"
+    },
+    {
+      "id": "aud_1793788035491_wqoq",
+      "admin_id": "usr_admin_001",
+      "admin_email": "eaglebusinessmanager@gmail.com",
+      "action": "PROVIDER_TEST_SMS_SENT",
+      "target_type": "SMS_GATEWAY",
+      "target_id": "bulksmsuganda",
+      "details": {
+        "recipient": "+256772123456",
+        "senderId": "ICONSEND",
+        "success": true,
+        "responseStatus": 200,
+        "providerMessageId": "bsmsug_sim_1793788035490_cfz1cel",
+        "latencyMs": 121
+      },
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-11-04T10:27:15.491Z"
+    },
+    {
+      "id": "aud_001",
+      "admin_id": "usr_admin_001",
+      "admin_email": "eaglebusinessmanager@gmail.com",
+      "action": "SYSTEM_BOOTSTRAP",
+      "target_type": "SYSTEM",
+      "target_id": "INIT",
+      "details": {
+        "message": "Initialized ICON SEND UG database and default settings"
+      },
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-11-04T10:07:47.089Z"
+    }
+  ],
+  "unsubscribe_records": []
+}
