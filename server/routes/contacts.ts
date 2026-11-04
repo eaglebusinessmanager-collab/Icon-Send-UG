@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { normalizeUgandanPhone } from '../sms/smsUtils.js';
-import { Contact, ContactGroup, User } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import { normalizeUgandanPhone } from '../sms/smsUtils.ts';
+import type { Contact, ContactGroup, User } from '../types.ts';
 
-export const contactsRouter = Router();
+export const contactsRouter = express.Router();
 
 // GET /api/contacts
 contactsRouter.get('/', authenticateUser, (req, res) => {

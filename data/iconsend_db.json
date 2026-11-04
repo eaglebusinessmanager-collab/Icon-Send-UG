@@ -433,10 +433,21 @@
   ],
   "provider_settings": [
     {
+      "id": "prov_mambosms",
+      "name": "Mambo SMS",
+      "slug": "mambosms",
+      "is_active": true,
+      "api_key": "$2y$10$YfDTA.u/EJiznNXb6335OuWb1nj61YENVAQ5KQ5xDZNsHAIj71CTq",
+      "api_url": "https://api-mongolia.mambosms.com",
+      "sender_id": "ICONSEND",
+      "balance_cached": 75,
+      "test_mode": false
+    },
+    {
       "id": "prov_bulksmsuganda",
       "name": "Bulk SMS Uganda",
       "slug": "bulksmsuganda",
-      "is_active": true,
+      "is_active": false,
       "api_key": "",
       "api_url": "https://app.bulksmsug.com",
       "sender_id": "ICONSEND",
@@ -479,7 +490,7 @@
     "maintenance_mode": false,
     "require_email_verification": false,
     "max_bulk_batch_size": 1000,
-    "active_provider_slug": "bulksmsuganda",
+    "active_provider_slug": "mambosms",
     "pesapal_consumer_key": "",
     "pesapal_consumer_secret": "",
     "pesapal_ipn_id": "",

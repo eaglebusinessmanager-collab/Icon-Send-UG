@@ -25,14 +25,15 @@ export const AdminPaymentsPage: React.FC = () => {
   }, []);
 
   const handleReconcile = async (id: string, action: 'approve' | 'reject') => {
-    const notes = prompt(`Enter reconciliation notes for ${action.toUpperCase()}:`) || '';
+    const notes = `Reconciled as ${action.toUpperCase()} on ${new Date().toLocaleDateString('en-GB')}`;
     try {
       const res = await api.admin.reconcilePayment(id, { action, notes });
       setActionFeedback(res.message);
       loadPayments();
       setTimeout(() => setActionFeedback(''), 4000);
     } catch {
-      alert('Error reconciling payment');
+      setActionFeedback('Error reconciling payment. Please try again.');
+      setTimeout(() => setActionFeedback(''), 4000);
     }
   };
 

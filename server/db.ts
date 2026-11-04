@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import {
+import type {
   User,
   Wallet,
   WalletTransaction,
@@ -17,7 +17,7 @@ import {
   NotificationItem,
   AuditLog,
   UnsubscribeRecord,
-} from './types.js';
+} from './types.ts';
 
 interface DatabaseSchema {
   users: User[];
@@ -452,10 +452,21 @@ class Database {
 
     const providers: SMSProviderConfig[] = [
       {
+        id: 'prov_mambosms',
+        name: 'Mambo SMS',
+        slug: 'mambosms',
+        is_active: true,
+        api_key: process.env.MAMBOSMS_API_KEY || '$2y$10$YfDTA.u/EJiznNXb6335OuWb1nj61YENVAQ5KQ5xDZNsHAIj71CTq',
+        api_url: 'https://api-mongolia.mambosms.com',
+        sender_id: 'ICONSEND',
+        balance_cached: 100,
+        test_mode: false,
+      },
+      {
         id: 'prov_bulksmsuganda',
         name: 'Bulk SMS Uganda',
         slug: 'bulksmsuganda',
-        is_active: true,
+        is_active: false,
         api_key: process.env.BULKSMSUG_API_KEY || '',
         api_url: 'https://app.bulksmsug.com',
         sender_id: 'ICONSEND',
@@ -499,7 +510,7 @@ class Database {
       maintenance_mode: false,
       require_email_verification: false,
       max_bulk_batch_size: 1000,
-      active_provider_slug: 'bulksmsuganda',
+      active_provider_slug: 'mambosms',
       pesapal_consumer_key: process.env.PESAPAL_CONSUMER_KEY || '',
       pesapal_consumer_secret: process.env.PESAPAL_CONSUMER_SECRET || '',
       pesapal_ipn_id: process.env.PESAPAL_IPN_ID || '',
@@ -549,12 +560,34 @@ class Database {
         const loadedSettings: SystemSettings = {
           ...initial.system_settings,
           ...(parsed.system_settings || {}),
+          active_provider_slug: parsed.system_settings?.active_provider_slug === 'bulksmsuganda' ? 'mambosms' : (parsed.system_settings?.active_provider_slug || 'mambosms'),
           signup_bonus_credits: 0,
           free_credits_enabled: false,
         };
+
+        const loadedProviders = [...(parsed.provider_settings || [])];
+        for (const initProv of initial.provider_settings) {
+          const idx = loadedProviders.findIndex(p => p.slug === initProv.slug);
+          if (idx === -1) {
+            loadedProviders.push(initProv);
+          } else if (initProv.slug === 'mambosms') {
+            if (!loadedProviders[idx].api_key || loadedProviders[idx].api_key.trim() === '') {
+              loadedProviders[idx].api_key = initProv.api_key;
+            }
+            loadedProviders[idx].test_mode = false;
+          }
+        }
+
+        // Set active flag on providers
+        const activeSlug = loadedSettings.active_provider_slug || 'mambosms';
+        for (const p of loadedProviders) {
+          p.is_active = p.slug === activeSlug;
+        }
+
         return {
           ...initial,
           ...parsed,
+          provider_settings: loadedProviders,
           system_settings: loadedSettings,
         };
       }

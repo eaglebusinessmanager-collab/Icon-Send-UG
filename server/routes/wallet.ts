@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { pesapalService } from '../pesapal/pesapalService.js';
-import { PaymentTransaction, User } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import { pesapalService } from '../pesapal/pesapalService.ts';
+import type { PaymentTransaction, User } from '../types.ts';
 
-export const walletRouter = Router();
+export const walletRouter = express.Router();
 
 // GET /api/wallet
 walletRouter.get('/', authenticateUser, (req, res) => {

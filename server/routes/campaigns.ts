@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { User, SMSCampaign } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import type { User, SMSCampaign } from '../types.ts';
 
-export const campaignsRouter = Router();
+export const campaignsRouter = express.Router();
 
 // GET /api/campaigns
 campaignsRouter.get('/', authenticateUser, (req, res) => {

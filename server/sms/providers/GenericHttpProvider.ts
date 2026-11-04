@@ -1,11 +1,11 @@
-import { SMSProviderConfig } from '../../types.js';
-import { normalizeUgandanPhone } from '../smsUtils.js';
-import {
+import type { SMSProviderConfig } from '../../types.ts';
+import { normalizeUgandanPhone } from '../smsUtils.ts';
+import type {
   SMSProviderAdapter,
   ProviderSendResult,
   ProviderDeliveryStatusResult,
   ProviderBalanceResult,
-} from './SMSProviderAdapter.js';
+} from './SMSProviderAdapter.ts';
 
 export class GenericHttpProvider implements SMSProviderAdapter {
   slug = 'generic_http';

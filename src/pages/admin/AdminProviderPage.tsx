@@ -75,10 +75,11 @@ export const AdminProviderPage: React.FC = () => {
   const [dispatchingTest, setDispatchingTest] = useState<boolean>(false);
   const [diagnosticResult, setDiagnosticResult] = useState<DiagnosticResult | null>(null);
 
-  // Configuration edit state for Bulk SMS Uganda
+  // Configuration edit state
+  const [editingSlug, setEditingSlug] = useState<string>('mambosms');
   const [apiKey, setApiKey] = useState<string>('');
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
-  const [apiUrl, setApiUrl] = useState<string>('https://app.bulksmsug.com');
+  const [apiUrl, setApiUrl] = useState<string>('https://api-mongolia.mambosms.com');
   const [senderId, setSenderId] = useState<string>('ICONSEND');
   const [testMode, setTestMode] = useState<boolean>(false);
 
@@ -90,16 +91,17 @@ export const AdminProviderPage: React.FC = () => {
       const list = await api.admin.providers();
       setProviders(list);
       const active = list.find((p) => p.isActive);
-      if (active) {
-        setActiveSlug(active.slug);
-      }
-      const bulkUg = list.find((p) => p.slug === 'bulksmsuganda');
-      if (bulkUg) {
-        setApiKey(bulkUg.config.api_key || '');
-        setApiUrl(bulkUg.config.api_url || 'https://app.bulksmsug.com');
-        setSenderId(bulkUg.config.sender_id || 'ICONSEND');
-        setTestMode(Boolean(bulkUg.config.test_mode));
-        setCalibrationCredits(bulkUg.config.balance_cached || 2500);
+      const currentActiveSlug = active ? active.slug : 'mambosms';
+      setActiveSlug(currentActiveSlug);
+
+      const targetToEdit = list.find((p) => p.slug === (editingSlug || currentActiveSlug)) || list[0];
+      if (targetToEdit) {
+        setEditingSlug(targetToEdit.slug);
+        setApiKey(targetToEdit.config.api_key || '');
+        setApiUrl(targetToEdit.config.api_url || (targetToEdit.slug === 'mambosms' ? 'https://api-mongolia.mambosms.com' : 'https://app.bulksmsug.com'));
+        setSenderId(targetToEdit.config.sender_id || 'ICONSEND');
+        setTestMode(Boolean(targetToEdit.config.test_mode));
+        setCalibrationCredits(targetToEdit.config.balance_cached || 100);
       }
     } catch {
       console.error('Failed to load providers');
@@ -129,40 +131,50 @@ export const AdminProviderPage: React.FC = () => {
 
   useEffect(() => {
     loadProviders().then(() => {
-      handleSyncBalance('bulksmsuganda');
+      handleSyncBalance('mambosms');
     });
   }, []);
 
-  const handleSwitchProvider = async (slug: string) => {
-    if (confirm(`Switch active SMS gateway to ${slug}? All customer wallets, campaigns, contacts, and delivery logs will remain completely intact.`)) {
-      try {
-        const res = await api.admin.switchActiveProvider(slug);
-        setActiveSlug(slug);
-        setSaveFeedback(res.message);
-        loadProviders();
-        handleSyncBalance(slug);
-        setTimeout(() => setSaveFeedback(''), 4000);
-      } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'Error switching provider');
-      }
+  const handleSelectToEdit = (slug: string) => {
+    setEditingSlug(slug);
+    const p = providers.find((item) => item.slug === slug);
+    if (p) {
+      setApiKey(p.config.api_key || '');
+      setApiUrl(p.config.api_url || (slug === 'mambosms' ? 'https://api-mongolia.mambosms.com' : ''));
+      setSenderId(p.config.sender_id || 'ICONSEND');
+      setTestMode(Boolean(p.config.test_mode));
     }
   };
 
-  const handleSaveBulkSmsUganda = async (e: React.FormEvent) => {
+  const handleSwitchProvider = async (slug: string) => {
+    try {
+      const res = await api.admin.switchActiveProvider(slug);
+      setActiveSlug(slug);
+      setEditingSlug(slug);
+      setSaveFeedback(res.message);
+      loadProviders();
+      handleSyncBalance(slug);
+      setTimeout(() => setSaveFeedback(''), 4000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error switching provider');
+    }
+  };
+
+  const handleSaveProviderConfig = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaveFeedback('');
     setError('');
 
     try {
-      await api.admin.updateProviderConfig('bulksmsuganda', {
+      await api.admin.updateProviderConfig(editingSlug, {
         api_key: apiKey,
         api_url: apiUrl,
         sender_id: senderId,
         test_mode: testMode,
       });
-      setSaveFeedback('Bulk SMS Uganda gateway credentials saved successfully.');
+      setSaveFeedback(`${editingSlug.toUpperCase()} gateway configuration saved successfully.`);
       loadProviders();
-      handleSyncBalance('bulksmsuganda');
+      handleSyncBalance(editingSlug);
       setTimeout(() => setSaveFeedback(''), 4000);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error saving provider config');
@@ -572,6 +584,17 @@ export const AdminProviderPage: React.FC = () => {
               <div className="pt-4 mt-4 border-t border-neutral-100 space-y-2">
                 <button
                   type="button"
+                  onClick={() => handleSelectToEdit(p.slug)}
+                  className={`w-full text-xs font-mono py-1.5 border ${
+                    editingSlug === p.slug ? 'bg-neutral-950 text-white border-neutral-950' : 'border-neutral-300 hover:bg-neutral-50 text-neutral-800'
+                  } flex items-center justify-center space-x-1 cursor-pointer`}
+                >
+                  <Sliders className="w-3 h-3" />
+                  <span>{editingSlug === p.slug ? 'Currently Editing' : 'Configure Settings'}</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={() => handleTestConnection(p.slug)}
                   disabled={testing}
                   className="w-full text-xs font-mono py-1.5 border border-neutral-300 hover:bg-neutral-50 text-neutral-800 flex items-center justify-center space-x-1 cursor-pointer"
@@ -584,7 +607,7 @@ export const AdminProviderPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSwitchProvider(p.slug)}
-                    className="w-full text-xs font-mono py-1.5 bg-neutral-950 text-white hover:bg-neutral-800 cursor-pointer"
+                    className="w-full text-xs font-mono py-1.5 bg-neutral-900 text-white hover:bg-neutral-800 cursor-pointer"
                   >
                     Activate As Gateway
                   </button>
@@ -622,33 +645,43 @@ export const AdminProviderPage: React.FC = () => {
         </div>
       )}
 
-      {/* Bulk SMS Uganda Settings Form */}
-      <div className="bg-white border border-neutral-200 p-6 space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
+      {/* Dynamic Provider Configuration Form */}
+      <div className="bg-white border-2 border-neutral-950 p-6 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-neutral-200 gap-2">
           <div>
+            <div className="text-[10px] font-mono text-neutral-500 uppercase font-semibold">
+              Selected Provider: {editingSlug.toUpperCase()}
+            </div>
             <h3 className="text-sm font-bold font-mono uppercase text-neutral-950">
-              Bulk SMS Uganda API Configuration (Primary Gateway)
+              {providers.find(p => p.slug === editingSlug)?.name || editingSlug} Configuration
+              {editingSlug === activeSlug && (
+                <span className="ml-2 text-[10px] bg-neutral-950 text-white px-2 py-0.5 font-normal">
+                  PRIMARY ACTIVE GATEWAY
+                </span>
+              )}
             </h3>
             <p className="text-xs text-neutral-500 font-mono mt-0.5">
-              Live REST API v1 endpoint: https://app.bulksmsug.com/api/v1/send-sms
+              {editingSlug === 'mambosms'
+                ? 'Direct telecom routing via Mambo SMS API (https://api-mongolia.mambosms.com/v1/send-sms)'
+                : `Gateway connection endpoint: ${apiUrl || 'Custom'}`}
             </p>
           </div>
-          <span className="text-xs font-mono px-2 py-0.5 bg-neutral-100 text-neutral-800 border border-neutral-300">
-            Auth: Bearer Token
+          <span className="text-xs font-mono px-2 py-0.5 bg-neutral-100 text-neutral-800 border border-neutral-300 self-start sm:self-auto">
+            Credentials Stored Securely on Backend
           </span>
         </div>
 
-        <form onSubmit={handleSaveBulkSmsUganda} className="space-y-4 text-xs font-mono">
+        <form onSubmit={handleSaveProviderConfig} className="space-y-4 text-xs font-mono">
           <div>
             <label className="block text-neutral-700 font-bold mb-1">
-              API Key (Bearer Token from bulksmsug.com dashboard) *
+              API Key / Auth Token (Kept private on server, masked from client) *
             </label>
             <div className="relative">
               <input
                 type={showApiKey ? 'text' : 'password'}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="Enter your Bulk SMS Uganda Bearer API key..."
+                placeholder="•••••••••••••••• (Leave unchanged or enter new key)"
                 className="w-full px-3 py-2 border border-neutral-300 focus:outline-none focus:border-neutral-950 font-mono text-sm pr-10"
               />
               <button
@@ -660,7 +693,9 @@ export const AdminProviderPage: React.FC = () => {
               </button>
             </div>
             <span className="text-[10px] text-neutral-400 mt-0.5 block">
-              Leave blank or enable "Test Mode" below to simulate carrier dispatches without consuming live airtime.
+              {editingSlug === 'mambosms'
+                ? 'Configured with live production Mambo SMS key. Leave unchanged or input a new key if rotating credentials.'
+                : 'Leave blank to use defaults or simulation mode.'}
             </span>
           </div>
 
@@ -700,21 +735,30 @@ export const AdminProviderPage: React.FC = () => {
                 className="accent-neutral-950"
               />
               <span className="text-neutral-950 font-bold">
-                Enable Test / Simulation Mode
+                Enable Test / Simulation Mode (Sandbox)
               </span>
             </label>
             <p className="text-[11px] text-neutral-500 mt-1 pl-6">
-              When Test Mode is checked, the platform simulates realistic transmission delays and returns mock tracking IDs (bsmsug_sim_...) without calling external telecom servers. Perfect for demonstrations and automated verifications.
+              When checked, SMS dispatches are simulated without calling external telecom carriers. Keep unchecked for <strong>Live Production Dispatches</strong>.
             </p>
           </div>
 
-          <div className="pt-2 flex justify-end">
+          <div className="pt-2 flex justify-end space-x-2">
+            {editingSlug !== activeSlug && (
+              <button
+                type="button"
+                onClick={() => handleSwitchProvider(editingSlug)}
+                className="border border-neutral-950 text-neutral-950 px-4 py-2 font-medium hover:bg-neutral-100 transition-colors inline-flex items-center space-x-2 cursor-pointer"
+              >
+                <span>Make Active Provider</span>
+              </button>
+            )}
             <button
               type="submit"
               className="bg-neutral-950 text-white px-6 py-2.5 font-medium hover:bg-neutral-800 transition-colors inline-flex items-center space-x-2 cursor-pointer"
             >
               <Save className="w-4 h-4" />
-              <span>Save Bulk SMS Uganda Credentials</span>
+              <span>Save {providers.find(p => p.slug === editingSlug)?.name || editingSlug} Settings</span>
             </button>
           </div>
         </form>

@@ -8,6 +8,7 @@ export const AdminPricingPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingPkg, setEditingPkg] = useState<SMSPackage | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,6 +38,7 @@ export const AdminPricingPage: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setErrorMessage('');
       if (editingPkg) {
         await api.admin.updatePackage(editingPkg.id, formData);
       } else {
@@ -46,12 +48,18 @@ export const AdminPricingPage: React.FC = () => {
       setEditingPkg(null);
       loadPackages();
     } catch {
-      alert('Error saving package');
+      setErrorMessage('Error saving package. Please check the values and try again.');
     }
   };
 
   return (
     <div className="space-y-6">
+      {errorMessage && (
+        <div className="p-3 bg-red-50 border border-red-200 text-xs text-red-700 flex justify-between items-center">
+          <span>{errorMessage}</span>
+          <button onClick={() => setErrorMessage('')} className="text-red-500 hover:text-red-700 font-bold ml-2">✕</button>
+        </div>
+      )}
       <div className="bg-white border border-neutral-200 p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

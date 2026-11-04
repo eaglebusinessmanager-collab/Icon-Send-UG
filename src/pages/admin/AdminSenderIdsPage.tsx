@@ -9,6 +9,7 @@ export const AdminSenderIdsPage: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   const [rejectModalId, setRejectModalId] = useState<string | null>(null);
   const [rejectReason, setRejectReason] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const loadList = async () => {
     try {
@@ -27,12 +28,13 @@ export const AdminSenderIdsPage: React.FC = () => {
 
   const handleUpdateStatus = async (id: string, status: 'approved' | 'rejected', reason?: string) => {
     try {
+      setErrorMessage('');
       await api.admin.updateSenderIdStatus(id, { status, rejection_reason: reason });
       setRejectModalId(null);
       setRejectReason('');
       loadList();
     } catch {
-      alert('Error updating sender ID status');
+      setErrorMessage('Failed to update sender ID status. Please try again.');
     }
   };
 
@@ -40,6 +42,12 @@ export const AdminSenderIdsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {errorMessage && (
+        <div className="p-3 bg-red-50 border border-red-200 text-xs text-red-700 flex justify-between items-center">
+          <span>{errorMessage}</span>
+          <button onClick={() => setErrorMessage('')} className="text-red-500 hover:text-red-700 font-bold ml-2">✕</button>
+        </div>
+      )}
       <div className="bg-white border border-neutral-200 p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

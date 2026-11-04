@@ -1,15 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { authRouter } from './server/routes/auth.js';
-import { smsRouter } from './server/routes/sms.js';
-import { campaignsRouter } from './server/routes/campaigns.js';
-import { contactsRouter } from './server/routes/contacts.js';
-import { walletRouter } from './server/routes/wallet.js';
-import { senderIdsRouter } from './server/routes/senderIds.js';
-import { notificationsRouter } from './server/routes/notifications.js';
-import { adminRouter } from './server/routes/admin.js';
+import { authRouter } from './server/routes/auth.ts';
+import { smsRouter } from './server/routes/sms.ts';
+import { campaignsRouter } from './server/routes/campaigns.ts';
+import { contactsRouter } from './server/routes/contacts.ts';
+import { walletRouter } from './server/routes/wallet.ts';
+import { senderIdsRouter } from './server/routes/senderIds.ts';
+import { notificationsRouter } from './server/routes/notifications.ts';
+import { adminRouter } from './server/routes/admin.ts';
 
 dotenv.config();
 

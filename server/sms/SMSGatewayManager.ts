@@ -1,29 +1,42 @@
-import { SMSProviderConfig } from '../types.js';
-import {
+import type { SMSProviderConfig } from '../types.ts';
+import type {
   SMSProviderAdapter,
   ProviderSendResult,
   ProviderDeliveryStatusResult,
   ProviderBalanceResult,
   ProviderDiagnosticResult,
-} from './providers/SMSProviderAdapter.js';
-import { BulkSmsUgandaProvider } from './providers/BulkSmsUgandaProvider.js';
-import { AfricasTalkingProvider } from './providers/AfricasTalkingProvider.js';
-import { GenericHttpProvider } from './providers/GenericHttpProvider.js';
+} from './providers/SMSProviderAdapter.ts';
+import { MamboSmsProvider } from './providers/MamboSmsProvider.ts';
+import { BulkSmsUgandaProvider } from './providers/BulkSmsUgandaProvider.ts';
+import { AfricasTalkingProvider } from './providers/AfricasTalkingProvider.ts';
+import { GenericHttpProvider } from './providers/GenericHttpProvider.ts';
 
-import { db } from '../db.js';
+import { db } from '../db.ts';
 
 export class SMSGatewayManager {
   private static instance: SMSGatewayManager;
   private adapters: Map<string, SMSProviderAdapter> = new Map();
-  private activeSlug: string = 'bulksmsuganda';
+  private activeSlug: string = 'mambosms';
 
   private constructor() {
     // Default fallback configurations
+    const defaultMamboSmsConfig: SMSProviderConfig = {
+      id: 'prov_mambosms',
+      name: 'Mambo SMS',
+      slug: 'mambosms',
+      is_active: true,
+      api_key: process.env.MAMBOSMS_API_KEY || '$2y$10$YfDTA.u/EJiznNXb6335OuWb1nj61YENVAQ5KQ5xDZNsHAIj71CTq',
+      api_url: 'https://api-mongolia.mambosms.com',
+      sender_id: 'ICONSEND',
+      balance_cached: 100,
+      test_mode: false,
+    };
+
     const defaultBulkSmsUgandaConfig: SMSProviderConfig = {
       id: 'prov_bulksmsuganda',
       name: 'Bulk SMS Uganda',
       slug: 'bulksmsuganda',
-      is_active: true,
+      is_active: false,
       api_key: process.env.BULKSMSUG_API_KEY || '',
       api_url: 'https://app.bulksmsug.com',
       sender_id: 'ICONSEND',
@@ -56,6 +69,7 @@ export class SMSGatewayManager {
       test_mode: true,
     };
 
+    this.registerAdapter(new MamboSmsProvider(defaultMamboSmsConfig));
     this.registerAdapter(new BulkSmsUgandaProvider(defaultBulkSmsUgandaConfig));
     this.registerAdapter(new AfricasTalkingProvider(defaultAfricasTalkingConfig));
     this.registerAdapter(new GenericHttpProvider(defaultGenericConfig));
@@ -111,8 +125,8 @@ export class SMSGatewayManager {
   public getActiveAdapter(): SMSProviderAdapter {
     const adapter = this.adapters.get(this.activeSlug);
     if (!adapter) {
-      // Fallback to Bulk SMS Uganda
-      return this.adapters.get('bulksmsuganda')!;
+      // Fallback to Mambo SMS
+      return this.adapters.get('mambosms') || this.adapters.get('bulksmsuganda')!;
     }
     return adapter;
   }

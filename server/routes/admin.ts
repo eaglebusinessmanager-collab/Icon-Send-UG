@@ -1,11 +1,12 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { smsGateway } from '../sms/SMSGatewayManager.js';
-import { User, SMSPackage } from '../types.js';
-import { PesapalService } from '../pesapal/pesapalService.js';
+import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import { smsGateway } from '../sms/SMSGatewayManager.ts';
+import type { User, SMSPackage } from '../types.ts';
+import { PesapalService } from '../pesapal/pesapalService.ts';
 
-export const adminRouter = Router();
+export const adminRouter = express.Router();
 
 // Middleware: Require Admin or Super Admin role
 export function requireAdmin(req: Request, res: Response, next: NextFunction) {
@@ -182,7 +183,14 @@ adminRouter.get('/sms-monitoring', (req, res) => {
 
 // GET /api/admin/providers
 adminRouter.get('/providers', async (req, res) => {
-  const providers = smsGateway.getAllProviders();
+  const providers = smsGateway.getAllProviders().map(p => ({
+    ...p,
+    config: {
+      ...p.config,
+      api_key: p.config.api_key && p.config.api_key.trim() !== '' ? '••••••••••••••••' : '',
+      api_secret: p.config.api_secret && p.config.api_secret.trim() !== '' ? '••••••••••••••••' : '',
+    },
+  }));
   res.json(providers);
 });
 
@@ -226,13 +234,19 @@ adminRouter.put('/providers/:slug', (req, res) => {
   const { slug } = req.params;
   const { api_key, api_url, api_secret, sender_id, test_mode } = req.body;
 
-  const updated = smsGateway.updateProviderConfig(slug, {
-    ...(api_key !== undefined ? { api_key: api_key.trim() } : {}),
+  const isMaskedOrEmpty = (str?: string) => !str || str.includes('••') || str.trim() === '';
+  const sanitizedApiKey = !isMaskedOrEmpty(api_key) ? api_key.trim() : undefined;
+  const sanitizedApiSecret = !isMaskedOrEmpty(api_secret) ? api_secret.trim() : undefined;
+
+  const updatePayload: Record<string, unknown> = {
+    ...(sanitizedApiKey !== undefined ? { api_key: sanitizedApiKey } : {}),
     ...(api_url !== undefined ? { api_url: api_url.trim() } : {}),
-    ...(api_secret !== undefined ? { api_secret: api_secret.trim() } : {}),
+    ...(sanitizedApiSecret !== undefined ? { api_secret: sanitizedApiSecret } : {}),
     ...(sender_id !== undefined ? { sender_id: sender_id.trim() } : {}),
     ...(test_mode !== undefined ? { test_mode: Boolean(test_mode) } : {}),
-  });
+  };
+
+  const updated = smsGateway.updateProviderConfig(slug, updatePayload);
 
   if (!updated) {
     return res.status(404).json({ error: 'Provider adapter not found' });
@@ -244,10 +258,7 @@ adminRouter.put('/providers/:slug', (req, res) => {
   if (existingIdx !== -1) {
     pList[existingIdx] = {
       ...pList[existingIdx],
-      ...(api_key !== undefined ? { api_key: api_key.trim() } : {}),
-      ...(api_url !== undefined ? { api_url: api_url.trim() } : {}),
-      ...(sender_id !== undefined ? { sender_id: sender_id.trim() } : {}),
-      ...(test_mode !== undefined ? { test_mode: Boolean(test_mode) } : {}),
+      ...updatePayload,
     };
   }
   db.persist();

@@ -181,7 +181,7 @@ export const AdminOverviewPage: React.FC<AdminOverviewPageProps> = ({ onNavigate
           <div className="flex items-center space-x-2">
             <Server className="w-4 h-4 text-neutral-950" />
             <span className="font-bold text-neutral-950">
-              Active SMS Provider: {metrics.activeProviderSlug === 'bulksmsuganda' ? 'Bulk SMS Uganda REST API v1' : metrics.activeProviderSlug.toUpperCase()}
+              Active SMS Provider: {metrics.activeProviderSlug === 'mambosms' ? 'Mambo SMS REST API v1 (Live)' : metrics.activeProviderSlug === 'bulksmsuganda' ? 'Bulk SMS Uganda REST API v1' : metrics.activeProviderSlug.toUpperCase()}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-3 text-neutral-600 text-[11px]">

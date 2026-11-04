@@ -1,9 +1,10 @@
-import { Router, Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import crypto from 'crypto';
-import { db, hashPassword, verifyPassword } from '../db.js';
-import { User } from '../types.js';
+import { db, hashPassword, verifyPassword } from '../db.ts';
+import type { User } from '../types.ts';
 
-export const authRouter = Router();
+export const authRouter = express.Router();
 
 // Middleware to extract user from session token
 export function authenticateUser(req: Request, res: Response, next: () => void) {

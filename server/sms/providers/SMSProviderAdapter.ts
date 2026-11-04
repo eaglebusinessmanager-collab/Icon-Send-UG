@@ -1,4 +1,4 @@
-import { SMSProviderConfig } from '../../types.js';
+import type { SMSProviderConfig } from '../../types.ts';
 
 export interface ProviderSendResult {
   success: boolean;

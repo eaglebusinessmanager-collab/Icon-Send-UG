@@ -44,7 +44,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-neutral-950">Modular Telecom Architecture</h2>
             <p>
-              Unlike legacy SMS resellers whose applications break whenever a gateway is changed, ICON SEND UG is architected with a decoupled provider layer. The platform currently routes messages through Bulk SMS Uganda while supporting seamless failover and provider switching without disrupting customer balances, contact databases, or campaign logs.
+              Unlike legacy SMS resellers whose applications break whenever a gateway is changed, ICON SEND UG is architected with a decoupled provider layer. The platform currently routes messages through Mambo SMS while supporting seamless failover and provider switching without disrupting customer balances, contact databases, or campaign logs.
             </p>
           </section>
 

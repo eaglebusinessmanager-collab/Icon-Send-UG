@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { SenderID, User } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import type { SenderID, User } from '../types.ts';
 
-export const senderIdsRouter = Router();
+export const senderIdsRouter = express.Router();
 
 // GET /api/sender-ids
 senderIdsRouter.get('/', authenticateUser, (req, res) => {

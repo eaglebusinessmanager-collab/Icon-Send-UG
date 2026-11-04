@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { User } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import type { User } from '../types.ts';
 
-export const notificationsRouter = Router();
+export const notificationsRouter = express.Router();
 
 // GET /api/notifications
 notificationsRouter.get('/', authenticateUser, (req, res) => {

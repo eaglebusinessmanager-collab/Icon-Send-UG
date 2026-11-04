@@ -1,12 +1,12 @@
-import { SMSProviderConfig } from '../../types.js';
-import { normalizeUgandanPhone } from '../smsUtils.js';
-import {
+import type { SMSProviderConfig } from '../../types.ts';
+import { normalizeUgandanPhone } from '../smsUtils.ts';
+import type {
   SMSProviderAdapter,
   ProviderSendResult,
   ProviderDeliveryStatusResult,
   ProviderBalanceResult,
   ProviderDiagnosticResult,
-} from './SMSProviderAdapter.js';
+} from './SMSProviderAdapter.ts';
 
 export class BulkSmsUgandaProvider implements SMSProviderAdapter {
   slug = 'bulksmsuganda';

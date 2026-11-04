@@ -172,7 +172,7 @@ export const ReportsPage: React.FC = () => {
               <span className="text-neutral-950 font-bold block">Gateway Route Health:</span>
               <div className="flex items-center space-x-2 text-neutral-700">
                 <div className="w-2 h-2 bg-neutral-950 rounded-full" />
-                <span>Bulk SMS Uganda REST API v1: Operational (Lat: ~210ms)</span>
+                <span>Mambo SMS REST API v1: Operational (Live Route)</span>
               </div>
               <div className="flex items-center space-x-2 text-neutral-500 text-[11px]">
                 <div className="w-2 h-2 bg-neutral-400 rounded-full" />

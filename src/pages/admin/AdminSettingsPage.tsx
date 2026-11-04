@@ -53,9 +53,9 @@ export const AdminSettingsPage: React.FC = () => {
       const res = await api.admin.updateSystemSettings(settings);
       setSaveFeedback('System settings updated successfully.');
       fetchSettingsAndStatus();
-      setTimeout(() => setSaveFeedback(''), 4000);
     } catch {
-      alert('Error updating settings');
+      setSaveFeedback('Error updating settings. Please try again.');
+      setTimeout(() => setSaveFeedback(''), 4000);
     }
   };
 
@@ -425,17 +425,17 @@ CREATE TABLE IF NOT EXISTS wallets (
             {/* Step 2 & 3 */}
             <div className="border border-neutral-200 p-5 bg-neutral-50 space-y-2">
               <h4 className="text-sm font-bold font-mono text-neutral-950">
-                2 & 3. How to Configure Bulk SMS Uganda & Enter API Credentials
+                2 & 3. How to Configure Mambo SMS & Enter API Credentials
               </h4>
               <p>
-                Our gateway communicates with the real <strong>Bulk SMS Uganda</strong> REST API v1:
+                Our gateway is now active on <strong>Mambo SMS</strong> live REST API v1 (with seamless modular switching to Bulk SMS Uganda, Africa's Talking, or custom gateways):
               </p>
               <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                <li>Register an account on <code>https://bulksmsug.com</code>.</li>
-                <li>Navigate to the API section in your Bulk SMS Uganda client portal to generate your <strong>Bearer Token API Key</strong>.</li>
-                <li>Open <strong>Admin &gt; SMS Gateway Provider</strong> inside ICON SEND UG.</li>
-                <li>Paste your Bearer token in the <strong>API Key</strong> field, ensure Base URL is set to <code>https://app.bulksmsug.com</code>, and click <strong>Save</strong>.</li>
-                <li>Click <strong>Test Connection</strong> to run live diagnostics. The platform will report connection health and query available wholesale credits.</li>
+                <li>Register an account on <code>https://mambosms.com</code>.</li>
+                <li>Your Mambo SMS API Key is configured securely on the backend server and masked from browser clients for maximum security.</li>
+                <li>Open <strong>Admin &gt; SMS Gateway Provider</strong> to inspect live balance, test network latency, or switch routes.</li>
+                <li>Ensure Test Mode (Sandbox) is unchecked for <strong>Production Live Dispatches</strong> directly to MTN, Airtel, and Lyca networks.</li>
+                <li>Click <strong>Ping / Test Gateway</strong> or <strong>Send Live Test SMS</strong> to verify real-time telecom routing anytime.</li>
               </ul>
             </div>
 

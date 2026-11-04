@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import { db } from '../db.js';
-import { authenticateUser } from './auth.js';
-import { smsGateway } from '../sms/SMSGatewayManager.js';
-import { normalizeUgandanPhone, calculateSmsSegments } from '../sms/smsUtils.js';
-import { SMSMessage, SMSCampaign, User } from '../types.js';
+import express from 'express';
+import { db } from '../db.ts';
+import { authenticateUser } from './auth.ts';
+import { smsGateway } from '../sms/SMSGatewayManager.ts';
+import { normalizeUgandanPhone, calculateSmsSegments } from '../sms/smsUtils.ts';
+import type { SMSMessage, SMSCampaign, User } from '../types.ts';
 
-export const smsRouter = Router();
+export const smsRouter = express.Router();
 
 // Public/authenticated phone validation endpoint
 smsRouter.post('/validate-number', (req, res) => {

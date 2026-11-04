@@ -125,7 +125,7 @@ function AppContent() {
       case 'admin_campaigns':
         return { title: 'All Campaigns', subtitle: 'System-wide Broadcasts' };
       case 'admin_provider':
-        return { title: 'SMS Gateway Provider', subtitle: 'Bulk SMS Uganda & Modular Routing' };
+        return { title: 'SMS Gateway Provider', subtitle: 'Mambo SMS & Modular Routing' };
       case 'admin_sender_ids':
         return { title: 'Sender ID Requests', subtitle: 'UCC Review & Approvals' };
       case 'admin_pricing':

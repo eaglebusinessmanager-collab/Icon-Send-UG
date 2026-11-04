@@ -188,7 +188,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               onClick={handleSyncDelivery}
               disabled={syncing}
               className="text-neutral-950 underline hover:text-neutral-700 cursor-pointer"
-              title="Query Bulk SMS Uganda delivery status"
+              title="Query gateway delivery status"
             >
               <RefreshCw className={`w-3 h-3 ${syncing ? 'animate-spin' : ''}`} />
             </button>
